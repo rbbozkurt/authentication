@@ -6,6 +6,7 @@ export type User = {
     password : string;
 }
 
+//FIXME : This is a fake database
 const users : User[] = [
     {
         userId : 1,
