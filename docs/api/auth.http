@@ -1,0 +1,17 @@
+POST http://localhost:3000/auth/login
+content-type: application/json
+
+{
+    "username": "Alice",
+    "password": "topsecret"
+}
+
+###
+
+POST http://localhost:3000/auth/login
+content-type: application/json
+
+{
+    "username": "Alice",
+    "password": "falsepin"
+}
