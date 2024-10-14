@@ -1,6 +1,6 @@
 import { Controller, NotImplementedException, Post, HttpCode, HttpStatus, Body, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './guards/auth/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
