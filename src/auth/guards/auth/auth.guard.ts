@@ -1,29 +1,31 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+
+  constructor(private jwtService : JwtService) {}
   async canActivate(
     context: ExecutionContext,
   ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const authorization = request.headers.authorization;
-
-    if (!authorization) {
-      return false;
-    }
-
     const token = authorization.split(' ')[1];
 
-    // Add your token validation logic here
-    const isValidToken = await this.validateToken(token);
+    if (!token) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    
+    try {
 
-    return isValidToken;
-  }
-
-  private async validateToken(token: string): Promise<boolean> {
-    // Implement your token validation logic here
-    // For example, you could verify the token with a secret or check its expiration
-    return token === 'valid-token'; // Replace this with actual validation logic
+      const tokenPayload = await this.jwtService.verifyAsync(token);
+      request.user = {
+        userId: tokenPayload.sub,
+        username: tokenPayload.username
+      }
+      return true;
+    }catch(error) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
   }
 }
