@@ -6,9 +6,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from 'src/configs /jwt-secret';
 import { PassportAuthController } from './passport-auth.controller';
 import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy],
   controllers: [AuthController, PassportAuthController],
   imports: [
     UsersModule,

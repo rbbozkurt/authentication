@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { NotImplementedException, Post, HttpCode, HttpStatus, Body } from '@nestjs/common';
+import { NotImplementedException, Post, HttpCode, HttpStatus, Body, UseGuards } from '@nestjs/common';
+import { PassportLocalGuard } from './guards/passport-local.guard';
 
 
 @Controller('auth-v2')
@@ -9,8 +10,9 @@ export class PassportAuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
+    @UseGuards(PassportLocalGuard)
     login(@Body() input: { username: string; password: string }) {
-        throw new NotImplementedException();
+        return 'success';
     }
 
 

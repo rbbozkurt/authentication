@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const authorization = request.headers.authorization;
-    const token = authorization.split(' ')[1];
+    const token = authorization?.split(' ')[1];
 
     if (!token) {
       throw new UnauthorizedException('Invalid credentials');
